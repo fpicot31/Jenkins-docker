@@ -15,6 +15,7 @@ node {
         sh 'docker exec devops curl localhost:80'
         sh 'echo "Tests passed"'
         }
+        
     }
 
     stage('Livraision sur DockerHub') {

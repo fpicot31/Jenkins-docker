@@ -9,8 +9,7 @@ docker run --name jenkins-blueocean --rm --detach --network jenkins --env DOCKER
 -- aller sur http://localhost:8080
 -- creer le pipeline de deploiement
 
-
-sudo docker exec -it jenkins-blueocean /bin/bash
+docker exec -it jenkins-blueocean /bin/bash
 cat /var/jenkins_home/secrets/initialAdminPassword
 
 # Pour tester seul nginx

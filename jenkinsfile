@@ -6,7 +6,7 @@ pipeline {
     stage('Stage 1') {
       steps {
         script {
-          sh `docker build -t atos06/ipiformation .` 
+          sh "docker build -t atos06/ipiformation ." 
         }
       }
     }

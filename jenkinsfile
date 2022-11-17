@@ -3,12 +3,10 @@ pipeline {
   
   stages {
 
-    def app
     stage('Stage 1') {
       steps {
         script {
-          app = docker.build("atos06/ipiformation")
-          echo 'This whole pipeline will take ~20sec to finish.'
+          sh `docker build -t atos06/ipiformation .` 
         }
       }
     }

@@ -18,16 +18,33 @@ pipeline {
       }
     }
 
-
-    stage('Parallel stages') {
+    stage('Delcenchement des tests') {
       parallel {
 
         stage('Affichage de la page d accueil') {
           steps {
             script {
-              sh 'docker ps'
-              sh 'docker exec devops curl localhost:80'
-              sh 'echo "Tests passed"'
+               docker.image(registry').withRun('--rm -p 80:80 --name devops') { c ->
+                  sh 'docker ps'
+                  sh 'docker exec devops curl localhost:80'
+                  sh 'echo "Tests passed"'
+               }
+            }
+          }
+        }
+
+        stage('Integration') {
+          steps {
+            script {
+              sh 'sleep 5'
+            }
+          }
+        }
+
+        stage('Fonctionnel') {
+          steps {
+            script {
+              sh 'sleep 5'
             }
           }
         }
@@ -39,6 +56,7 @@ pipeline {
             }
           }
         }
+
 
       }
     }
@@ -52,5 +70,7 @@ pipeline {
           }
        }
     }
+
   }
+
 }

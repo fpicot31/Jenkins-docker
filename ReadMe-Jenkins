@@ -20,7 +20,16 @@ cat /var/jenkins_home/secrets/initialAdminPassword
 
 -- dans le navigateur, creer le pipeline de deploiement dans jenkins de type "pipeline"
 
-# Pour tester seul nginx en local de 2 façons
-docker run -d --name montp -p 8081:80 atos06/ipiformation
+# Pour tester l'application ginx en local de 2 façons
+docker build -t monappliweb .
+docker run -d --name monserveurweb -p 8081:80 monappliweb
+
+# Pour tester l'image finale livree dans le registre dockerhub  
 docker run -d --name monserver -p 8081:80 <votre login dockerhub>/<votre repo dockerhub>:1.0
+
+# Si erreur lors du lancement du pipeline : dial tcp: lookup docker: Temporary failure in name resolution
+sudo vi /etc/resolv.conf
+# Et ajouter les lignes piur le DNS :
+nameserver 8.8.4.4
+nameserver 8.8.8.8
 

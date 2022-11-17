@@ -79,6 +79,36 @@ pipeline {
        }
     }
 
-  }
 
+    stage('Deploiement') {
+      parallel {
+
+        stage('Environnement de developpement') {
+          steps {
+            script {
+              sh 'sleep 5'
+            }
+          }
+        }
+
+        stage('Environnement integration') {
+          steps {
+            script {
+              sh 'sleep 5'
+            }
+          }
+        }
+
+        stage('Environnement de production') {
+          steps {
+            script {
+              sh 'sleep 5'
+            }
+          }
+        }
+      }
+    }
+
+
+  }
 }

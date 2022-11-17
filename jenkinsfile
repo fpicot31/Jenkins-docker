@@ -21,7 +21,7 @@ pipeline {
     stage('Delcenchement des tests') {
       parallel {
 
-        stage('Affichage de la page d accueil') {
+        stage('Test affichage de la page d accueil') {
           steps {
             script {
                docker.image(registry).withRun('--rm -p 80:80 --name devops') { c ->
@@ -33,7 +33,7 @@ pipeline {
           }
         }
 
-        stage('Integration') {
+        stage('Test integration') {
           steps {
             script {
               sh 'sleep 5'
@@ -41,7 +41,7 @@ pipeline {
           }
         }
 
-        stage('Fonctionnel') {
+        stage('Test fonctionnel') {
           steps {
             script {
               sh 'sleep 5'
@@ -49,7 +49,15 @@ pipeline {
           }
         }
 
-        stage('Qualité du code') {
+        stage('Analyse qualité du code') {
+          steps {
+            script {
+              sh 'sleep 5'
+            }
+          }
+        }
+
+        stage('Test de securité') {
           steps {
             script {
               sh 'sleep 5'

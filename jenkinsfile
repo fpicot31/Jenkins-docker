@@ -1,8 +1,9 @@
 pipeline {
   agent any
-  def app
+  
   stages {
 
+    def app
     stage('Stage 1') {
       steps {
         script {

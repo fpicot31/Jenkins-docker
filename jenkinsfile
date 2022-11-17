@@ -1,4 +1,11 @@
 pipeline {
+
+  environment {
+     registry = "atos06/ipiformation"
+     registryCredential = 'docker-hub-credentials'
+     dockerImage = ''
+  }
+
   agent any
   
   stages {
@@ -6,26 +13,29 @@ pipeline {
     stage('Build de l application') {
       steps {
         script {
-          sh "docker build -t atos06/ipiformation ." 
+           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
+
 
     stage('Parallel stages') {
       parallel {
 
-        stage('Stage 2') {
+        stage('Affichage de la page d accueil') {
           steps {
             script {
-              sh 'sleep 20'
+              sh 'docker ps'
+              sh 'docker exec devops curl localhost:80'
+              sh 'echo "Tests passed"'
             }
           }
         }
 
-        stage('Stage 3') {
+        stage('Qualité du code') {
           steps {
             script {
-              sh 'sleep 20'
+              sh 'sleep 5'
             }
           }
         }
@@ -33,5 +43,14 @@ pipeline {
       }
     }
 
+    stage('Livraison') {
+       steps{
+          script {
+             docker.withRegistry('https://registry.hub.docker.com', registryCredential ) {
+                dockerImage.push("1.0")
+             }
+          }
+       }
+    }
   }
 }

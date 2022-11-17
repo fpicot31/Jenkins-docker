@@ -1,36 +1,27 @@
-pipeline {
-  agent any
-  stages {
+node {
+    def app
 
-    stage('Stage 1') {
-      steps {
-        script {
-          echo 'This whole pipeline will take ~20sec to finish.'
-        }
-      }
+    stage('Clonage des sources') {
+        checkout scm
     }
 
-    stage('Parallel stages') {
-      parallel {
-
-        stage('Stage 2') {
-          steps {
-            script {
-              sh 'sleep 20'
-            }
-          }
-        }
-
-        stage('Stage 3') {
-          steps {
-            script {
-              sh 'sleep 20'
-            }
-          }
-        }
-
-      }
+    stage('Build') {
+        app = docker.build("atos06/ipiformation")
     }
 
-  }
+    stage('Test') {
+        docker.image('atos06/ipiformation').withRun('--rm -p 80:80 --name devops') { c ->
+        sh 'docker ps'
+        sh 'docker exec devops curl localhost:80'
+        sh 'echo "Tests passed"'
+        }
+        
+    }
+
+    stage('Livraision sur DockerHub') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("1.0")
+        }
+    }
 }

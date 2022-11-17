@@ -1,12 +1,13 @@
 pipeline {
   agent any
+   def app
+
   stages {
 
-    stage('Stage 1') {
+    stage('Construction de l'application') {
       steps {
         script {
-          checkout scm
-          echo 'This whole pipeline will take ~20sec to finish.'
+           app = docker.build("atos06/ipiformation")
         }
       }
     }

@@ -3,7 +3,7 @@ pipeline {
   
   stages {
 
-    stage('Stage 1') {
+    stage('Build de l'application') {
       steps {
         script {
           sh "docker build -t atos06/ipiformation ." 

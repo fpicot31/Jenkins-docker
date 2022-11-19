@@ -24,7 +24,7 @@ pipeline {
         stage('Test affichage de la page d accueil') {
           steps {
             script {
-               docker.image(registry).withRun('--rm -p 80:80 --name devops') { c ->
+               docker.image(registry+":$BUILD_NUMBER").withRun('--rm -p 80:80 --name devops') { c ->
                   sh 'docker ps'
                   sh 'docker exec devops curl localhost:80'
                   sh 'echo "Tests passed"'

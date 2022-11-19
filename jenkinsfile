@@ -100,16 +100,19 @@ pipeline {
         }
 
         stage('Environnement de production') {
-           def dockerRun = 'docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'
+          steps {
+            script {
+              def dockerRun = 'docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'
            
-           sshagent(['srvprod']) {
-              sh 'ssh -o StrictHostKeyChecking=no prod-user@192.168.5.5 ${dockerRun}' 
-           }
+              sshagent(['srvprod']) {
+                 sh 'ssh -o StrictHostKeyChecking=no prod-user@192.168.5.5 ${dockerRun}' 
+              }
+            }
+          }
         }
-        
-      }
+      
+      } 
     }
-
 
   }
 }

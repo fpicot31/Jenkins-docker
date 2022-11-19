@@ -105,7 +105,8 @@ pipeline {
            sshagent(['srvprod']) {
               sh 'ssh -o StrictHostKeyChecking=no prod-user@192.168.5.5 ${dockerRun}' 
            }
-          
+        }
+        
       }
     }
 

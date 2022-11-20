@@ -113,11 +113,7 @@ sh '''
               def dockerRun = 'sudo docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'
            
               sshagent(['srvprod']) {
-              sh '''
-                     [ -d ~/.ssh ] || mkdir ~/.ssh && chmod 0700 ~/.ssh 
-                     ssh-keyscan -t rsa  192.168.5.5 >> ~/.ssh/known_hosts
-                     sh 'ssh -v -o StrictHostKeyChecking=no vagrant@192.168.5.5 ${dockerRun}'
-               ''' 
+                 sh 'ssh -v -o StrictHostKeyChecking=no -l vagrant 192.168.5.5 ${dockerRun}'
               }
             }
           }

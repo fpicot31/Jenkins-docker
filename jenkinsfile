@@ -49,7 +49,7 @@ pipeline {
           }
         }
 
-        stage('Analyse qualité du code') {
+        stage('Analyse qualité') {
           steps {
             script {
               sh 'sleep 5'
@@ -82,24 +82,8 @@ pipeline {
 
     stage('Deploiement') {
       parallel {
-
-        stage('Environnement de developpement') {
-          steps {
-            script {
-              sh 'sleep 5'
-            }
-          }
-        }
-
-        stage('Environnement integration') {
-          steps {
-            script {
-              sh 'sleep 5'
-            }
-          }
-        }
-      
-        stage('Environnement de production') {
+  
+        stage('Production') {
           steps {
             script {
               def dockerRun = 'sudo docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'

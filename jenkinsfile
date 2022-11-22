@@ -89,7 +89,7 @@ pipeline {
               def dockerRun = 'sudo docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'
            
               sshagent(['srvprod']) {
-                 sh 'sudo -u vagrant ssh -tt -v -o StrictHostKeyChecking=no -l vagrant 192.168.5.5 ${dockerRun}'             
+                 sh 'ssh -tt -v -o StrictHostKeyChecking=no -l vagrant 192.168.5.5 ${dockerRun}'             
               }
             }
           }

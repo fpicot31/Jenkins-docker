@@ -2,6 +2,7 @@
 
 -- Demarrer jenkins
 cd scripts
+chmod u+x *.sh
 ./start.sh
 
 -- Recuperer la cle en entrant dans le container jenkins

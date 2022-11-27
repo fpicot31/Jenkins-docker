@@ -22,3 +22,7 @@ sudo apt-get install git
 -- modification et push
 git  commit -am "mon commentaire"
 git push
+
+-- changement de user
+git config --global credential.username <user name git>
+

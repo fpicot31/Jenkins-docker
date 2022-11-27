@@ -4,14 +4,11 @@ docker network create jenkins
 -- Build de l'image jenkins blueocean
 docker build -t myjenkins-blueocean:2.361.4-1 -f Dockerfile-Jenkins .
 
--- lancer les 2 containers
+-- lancer les 2 containers : jenkins-docker et jenkins-blueocean
 docker run --name jenkins-docker --rm --detach   --privileged --network jenkins --network-alias docker   --env DOCKER_TLS_CERTDIR=/certs   --volume jenkins-docker-certs:/certs/client   --volume jenkins-data:/var/jenkins_home   --publish 3000:3000 --publish 5000:5000 --publish 2376:2376   docker:dind --storage-driver overlay2
-
-
 docker run --name jenkins-blueocean --detach   --network jenkins --env DOCKER_HOST=tcp://docker:2376   --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1   --publish 8080:8080 --publish 50000:50000   --volume jenkins-data:/var/jenkins_home   --volume jenkins-docker-certs:/certs/client:ro   --volume "$HOME":/home   --restart=on-failure   --env JAVA_OPTS="-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true"   myjenkins-blueocean:2.361.4-1
 
-
--- ouvrir un navigateur et lancer jenkins
+-- ouvrir un navigateur sur le port 8080
 http://localhost:8080
 
 -- dans un terminal, recuperer la cle en entrant dans le container jenkins ocean
@@ -24,12 +21,15 @@ cat /var/jenkins_home/secrets/initialAdminPassword
 docker build -t monappliweb .
 docker run -d --name monserveurweb -p 8081:80 monappliweb
 
-# Pour tester l'image finale livree dans le registre dockerhub  
+# Pour tester l'image finale livree dans le registre dockerhub
+docker stop monserver
+docker rm monserveur
+docker rmi <votre login dockerhub>/<votre repo dockerhub>:1.0
 docker run -d --name monserver -p 8081:80 <votre login dockerhub>/<votre repo dockerhub>:1.0
 
 # Si erreur lors du lancement du pipeline : dial tcp: lookup docker: Temporary failure in name resolution
 sudo vi /etc/resolv.conf
-# Et ajouter les lignes piur le DNS :
+# Et ajouter les lignes pour le DNS :
 nameserver 8.8.4.4
 nameserver 8.8.8.8
 

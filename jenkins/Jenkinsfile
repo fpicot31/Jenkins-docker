@@ -82,7 +82,8 @@ pipeline {
      stage('Deploiement') {
        steps{
           script {
-            def dockerRun = 'sudo docker system prune -af&&sudo docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'
+            def dockerRun = 'sudo docker stop monserver;sudo docker rm monserver;sudo docker rmi atos06/ipiformation:1.0;sudo docker run -d --name monserver -p 8081:80 atos06/ipiformation:1.0'
+            
             sh """ssh -tt -o StrictHostKeyChecking=no vagrant@192.168.5.20 << EOF
             ${dockerRun}
             exit

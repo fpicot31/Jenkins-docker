@@ -18,7 +18,7 @@ pipeline {
       }
     }
 
-    stage('Delcenchement des tests') {
+    stage('Tests') {
       parallel {
 
         stage('Test affichage de la page d accueil') {
@@ -33,14 +33,6 @@ pipeline {
           }
         }
 
-        stage('Test integration') {
-          steps {
-            script {
-              sh 'sleep 5'
-            }
-          }
-        }
-
         stage('Test fonctionnel') {
           steps {
             script {
@@ -48,23 +40,6 @@ pipeline {
             }
           }
         }
-
-        stage('Analyse qualité') {
-          steps {
-            script {
-              sh 'sleep 5'
-            }
-          }
-        }
-
-        stage('Test de securité') {
-          steps {
-            script {
-              sh 'sleep 5'
-            }
-          }
-        }
-
 
       }
     }

@@ -59,7 +59,7 @@ pipeline {
           script {
             def dockerRun = 'sudo docker stop monserver;sudo docker rm monserver;sudo docker rmi '+registry+':1.0;sudo docker run -d --name monserver -p 8081:80 '+registry+':1.0'
             
-            sh """echo $USER; echo $HOME;ssh -tt -o StrictHostKeyChecking=no azureuser@20.42.95.122 << EOF
+            sh """ssh -vvv -tt -o StrictHostKeyChecking=no azureuser@20.42.95.122 << EOF
             ${dockerRun}
             exit
             EOF""" 

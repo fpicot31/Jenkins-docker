@@ -1,7 +1,7 @@
 pipeline {
 
   environment {
-     registry = "alexandracc/monappliweb"
+     registry = "atos06/monappliweb"
      registryCredential = 'docker-hub-credentials'
      dockerImage = ''
   }
@@ -59,7 +59,7 @@ pipeline {
           script {
             def dockerRun = 'sudo docker stop monserver;sudo docker rm monserver;sudo docker rmi '+registry+':1.0;sudo docker run -d --name monserver -p 8081:80 '+registry+':1.0'
             
-            sh """ssh -vvv -tt -o StrictHostKeyChecking=no azureuser@20.42.95.122 << EOF
+            sh """ssh -vvv -tt -o StrictHostKeyChecking=no ubuntu@ec2-3-74-31-79.eu-central-1.compute.amazonaws.com << EOF
             ${dockerRun}
             exit
             EOF""" 

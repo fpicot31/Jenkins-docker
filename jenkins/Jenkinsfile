@@ -57,7 +57,7 @@ pipeline {
      stage('Déploiement de la release en production') {
        steps{
           script {
-            def dockerRun = 'sudo docker stop monserver;sudo docker rm monserver;sudo docker rmi '+registry+':1.0;sudo docker run -d --name monserver -p 8081:80 '+registry+':1.0'
+            def dockerRun = 'sudo docker stop monserver;sudo docker rm monserver;sudo docker run -d --name monserver -p 8081:80 '+registry+':1.0'
             
             sh """ssh -vvv -tt -o StrictHostKeyChecking=no ubuntu@ec2-3-78-65-164.eu-central-1.compute.amazonaws.com << EOF
             ${dockerRun}
